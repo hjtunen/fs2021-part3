@@ -40,20 +40,20 @@ app.get('/api/persons', (req, res) => {
   res.json(persons)
 })
 
-app.get('/api/notes/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
-  const note = notes.find(note => note.id === id)
+  const person = persons.find(person => person.id === id)
   
-  if (note) {
-    response.json(note)
+  if (person) {
+    response.json(person)
   } else {
     response.status(404).end()
   }
 })
 
-app.delete('/api/notes/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
-  notes = notes.filter(note => note.id !== id)
+  notes = notes.filter(person => person.id !== id)
 
   response.status(204).end()
 })
@@ -65,7 +65,7 @@ const generateId = () => {
   return maxId + 1
 }
 
-app.post('/api/notes', (request, response) => {
+app.post('/api/persons', (request, response) => {
   const body = request.body
 
   if (!body.content) {
@@ -74,16 +74,16 @@ app.post('/api/notes', (request, response) => {
     })
   }
 
-  const note = {
+  const person = {
     content: body.content,
     important: body.important || false,
     date: new Date(),
     id: generateId(),
   }
 
-  notes = notes.concat(note)
+  notes = notes.concat(person)
 
-  response.json(note)
+  response.json(person)
 })
   
 const PORT = 3001
